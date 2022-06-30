@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class User
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StockHistoric::class, mappedBy="user")
+     */
+    private $userHistoric;
+
+    public function __construct()
+    {
+        $this->userHistoric = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -88,5 +100,10 @@ class User
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    public function getUserHistoric(): Collection
+    {
+        return $this->userHistoric;
     }
 }
