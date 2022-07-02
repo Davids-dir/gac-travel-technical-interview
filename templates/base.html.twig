@@ -4,6 +4,16 @@
         {{ include('head.html.twig') }}
     </head>
     <body>
+        {% for message in app.flashes('success') %}
+            <div class="d-flex justify-content-center alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('danger') %}
+            <div class="d-flex justify-content-center alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         {% block body %}
         {% endblock %}
     </body>
