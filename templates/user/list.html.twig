@@ -1,0 +1,70 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}Listado de usuario - Stockify{% endblock %}
+
+{% block body %}
+    {{ block('sidebar', 'products/index.html.twig') }}
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
+                        <div>
+                            <h3 class="mb-3">Listado de usuarios</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive mb-3">
+                        <table class="table mb-0 tbl-server-info no-footer" role="grid">
+                            <thead class="bg-white text-uppercase">
+                            <tr class="ligth ligth-data" role="row">
+                                <th class="text-left">ID</th>
+                                <th class="text-left">Nombre</th>
+                                <th class="text-left">Activo</th>
+                                <th class="text-left">Fecha de creación</th>
+                                <th class="text-left">Rol</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td class="text-left id">{{ user.id }}</td>
+                                    <td class="text-left">{{ user.username }}</td>
+                                    <td class="text-left">
+                                        {% if user.active is same as (true) %}
+                                            {{ 'Si' }}
+                                        {% else %}
+                                            {{ 'No' }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-left">{{ user.createdAt() | date('d/M/Y')}}</td>
+                                    <td class="text-left">
+                                        {% for roles in user.roles %}
+                                            {% if roles is same as 'ROLE_USER' %}
+                                                {{ 'Usuario' }}
+                                            {% else %}
+                                                {{ 'Admin' }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="Editar" data-original-title="Editar" href="{{ path('edit_user', {id: user.id}) }}">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+                                        <a class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" data-original-title="Eliminar" href="{{ path('delete_user', {id: user.id}) }}">
+                                            <i class="las la-minus"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

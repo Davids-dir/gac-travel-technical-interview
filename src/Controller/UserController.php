@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\User\EditUserType;
 use App\Form\User\NewUserType;
-use App\Repository\UserRepository;
+use App\Service\UserService;
+use App\Util\UserRole;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +16,36 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user')]
 class UserController extends AbstractController
 {
+    use UserRole;
+
+    public function __construct
+    (
+        UserService $userService
+    )
+    {
+        $this->userService = $userService;
+    }
+
+    #[Route('/list', name: 'list_users', methods: ['GET'])]
+    public function list(): Response
+    {
+        if (in_array($this->roleAdmin, $this->getUser()->getRoles())) {
+            $users[] = $this->userService->getAllUsers();
+
+            return $this->render('user/list.html.twig', [
+                'users' => $users,
+            ]);
+        }
+
+        if (in_array($this->roleUser, $this->getUser()->getRoles())) {
+            $users[] = $this->getUser();
+
+            return $this->render('user/list.html.twig', [
+                'users' => $users,
+            ]);
+        }
+    }
+
     #[Route('/sign-up', name: 'sign_up', methods: ['GET','POST'])]
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -34,7 +66,6 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
             } catch (\Exception $e) {
-                $this->addFlash('danger', 'Se ha producido un error en la creación de usuario');
                 return $this->render('error.html.twig', ['message' => "Error al crear el usuario"]);
             }
 
@@ -55,16 +86,21 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'edit_user', methods: ['GET','POST'])]
     public function edit(Request $request, User $user): Response
     {
-        $form = $this->createForm(NewUserType::class, $user);
+        $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', "Se ha editado al usuario correctamente");
+            } catch (\Exception $e) {
+                $this->addFlash('danger', "Error al editar los campos de usuario");
+            }
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('list_users', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -73,7 +109,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete_user', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
