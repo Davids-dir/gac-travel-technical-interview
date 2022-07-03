@@ -11,15 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/*#[Route('/user')]*/
+#[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'login', methods: ['GET', 'POST'])]
-    public function login(UserRepository $userRepository): Response
-    {
-        return $this->render('security/login.html.twig');
-    }
-
     #[Route('/sign-up', name: 'sign_up', methods: ['GET','POST'])]
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -39,12 +33,12 @@ class UserController extends AbstractController
             try {
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->addFlash('success', 'Se ha creado el usuario correctamente');
             } catch (\Exception $e) {
                 $this->addFlash('danger', 'Se ha producido un error en la creación de usuario');
+                return $this->render('error.html.twig', ['message' => "Error al crear el usuario"]);
             }
 
-            return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+            return $this->render('success.html.twig');
         }
 
         return $this->renderForm('user/sign_up.html.twig', [
