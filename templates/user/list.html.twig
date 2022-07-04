@@ -28,40 +28,45 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for user in users %}
-                                <tr>
-                                    <td class="text-left id">{{ user.id }}</td>
-                                    <td class="text-left">{{ user.username }}</td>
-                                    <td class="text-left">
-                                        {% if user.active is same as (true) %}
-                                            {{ 'Si' }}
-                                        {% else %}
-                                            {{ 'No' }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-left">{{ user.createdAt() | date('d/M/Y')}}</td>
-                                    <td class="text-left">
-                                        {% for roles in user.roles %}
-                                            {% if roles is same as 'ROLE_USER' %}
-                                                {{ 'Usuario' }}
+                            {% if users is defined %}
+                                {% for user in users %}
+                                    <tr>
+                                        <td class="text-left id">{{ user.id }}</td>
+                                        <td class="text-left">{{ user.username }}</td>
+                                        <td class="text-left">
+                                            {% if user.active is same as (true) %}
+                                                {{ 'Si' }}
                                             {% else %}
-                                                {{ 'Admin' }}
+                                                {{ 'No' }}
                                             {% endif %}
-                                        {% endfor %}
-                                    </td>
-                                    <td class="text-right">
-                                        <a class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="Editar" data-original-title="Editar" href="{{ path('edit_user', {id: user.id}) }}">
-                                            <i class="ri-pencil-line"></i>
-                                        </a>
-                                        <a class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="Eliminar" data-original-title="Eliminar" href="{{ path('delete_user', {id: user.id}) }}">
-                                            <i class="las la-minus"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                        </td>
+                                        <td class="text-left">{{ user.createdAt() | date('d/M/Y') }}</td>
+                                        <td class="text-left">
+                                            {% for roles in user.roles %}
+                                                {% if roles is same as 'ROLE_ADMIN' %}
+                                                    {{ 'Admin, ' }}
+                                                {% else %}
+                                                    {{ 'Usuario' }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td class="text-right">
+                                            <a class="badge bg-warning" data-toggle="tooltip" data-placement="top"
+                                               title="Editar" data-original-title="Editar"
+                                               href="{{ path('edit_user', {id: user.id}) }}">
+                                                <i class="ri-pencil-line"></i>
+                                            </a>
+                                            <a class="badge bg-danger" data-toggle="tooltip" data-placement="top"
+                                               title="Eliminar" data-original-title="Eliminar"
+                                               href="{{ path('delete_user', {id: user.id, csrf: csrf_token('authenticate')}) }}">
+                                                <i class="las la-minus"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
                             </tbody>
                         </table>
-                    </div>
                     </div>
                 </div>
             </div>

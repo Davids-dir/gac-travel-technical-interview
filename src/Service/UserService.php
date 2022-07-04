@@ -18,9 +18,4 @@ class UserService
     {
         return $this->userRepository->findAll();
     }
-
-    public function getCurrentUser()
-    {
-        /*return $this->userRepository->*/
-    }
 }

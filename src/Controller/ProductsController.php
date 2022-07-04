@@ -16,6 +16,12 @@ class ProductsController extends AbstractController
     #[Route('/', name: 'products_index', methods: ['GET'])]
     public function index(ProductsRepository $productsRepository): Response
     {
+        /*if(!$this->getUser()->getActive()) {
+            $this->addFlash('danger', 'El usuario con el que estas accediendo no se encuentra activo');
+
+            return $this->redirectToRoute('logout', [], Response::HTTP_SEE_OTHER);
+        }*/
+
         return $this->render('products/index.html.twig', [
             'products' => $productsRepository->findAll(),
         ]);
