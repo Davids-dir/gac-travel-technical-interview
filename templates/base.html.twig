@@ -2,6 +2,7 @@
 <html>
     <head>
         {{ include('head.html.twig') }}
+        <title>{% block title %}Prueba{% endblock %}</title>
     </head>
     <body>
         {% for message in app.flashes('success') %}
@@ -15,6 +16,19 @@
             </div>
         {% endfor %}
         {% block body %}
+            {% block loader %}
+                <div id="loading">
+                    <div id="loading-center">
+                    </div>
+                </div>
+                {% endblock %}
+        {% endblock %}
+        {% block javascripts %}
+            <!-- Backend Bundle JavaScript -->
+            <script src="{{ asset('assets/js/backend-bundle.min.js') }}"></script>
+
+            <!-- app JavaScript -->
+            <script src="{{ asset('assets/js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>
