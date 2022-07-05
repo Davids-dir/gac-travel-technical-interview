@@ -36,7 +36,7 @@ class NewUserType extends AbstractType
             ->add('created_at', HiddenType::class, [
                 'required' => false
             ])
-            ->add('save', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => 'Crear cuenta',
                 'attr' => [
                     'class' => 'btn btn-primary',

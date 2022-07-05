@@ -1,13 +1,11 @@
 {% extends '/base.html.twig' %}
 
+{% block title %}Stockify{% endblock %}
 
 {% block body %}
-    <!-- loader Start -->
-    {# <div id="loading">
-    <div id="loading-center">
-    </div>
-</div> #}
-    <!-- loader END -->
+    {% block loader %}
+        {{ parent() }}
+    {% endblock %}
     <div class="wrapper">
         <section class="login-content">
             <div class="container">
@@ -36,4 +34,5 @@
             </div>
         </section>
     </div>
+
 {% endblock %}

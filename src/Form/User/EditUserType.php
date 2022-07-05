@@ -20,14 +20,14 @@ class EditUserType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'floating-input form-control',
+                    'class' => 'form-control',
                     'placeholder' => 'Usuario'
                 ],
             ])
             ->add('password', PasswordType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'floating-input form-control',
+                    'class' => 'form-control',
                     'placeholder' => 'Contraseña'
                 ]
             ])
@@ -35,10 +35,10 @@ class EditUserType extends AbstractType
                 'label' => 'Activo',
                 'required' => false,
                 'attr' => [
-                    'class' => 'm-2'
+                    'class' => 'form-check-input mt-2'
                 ]
             ])
-            ->add('save', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => 'Guardar cambios',
                 'attr' => [
                     'class' => 'btn btn-primary m-2',

@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Registro - Stockify{% endblock %}
+
 {% block body %}
+    {% block loader %}
+        {{ parent() }}
+    {% endblock %}
     <div class="wrapper">
         <section class="login-content">
             <div class="container">
@@ -45,4 +50,5 @@
             </div>
         </section>
     </div>
+
 {% endblock %}

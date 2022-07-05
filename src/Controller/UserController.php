@@ -19,11 +19,7 @@ class UserController extends AbstractController
     use UserRole;
     private $tokenId;
 
-    public function __construct
-    (
-        UserService $userService,
-        string $tokenId
-    )
+    public function __construct(UserService $userService, string $tokenId)
     {
         $this->userService = $userService;
         $this->tokenId = $tokenId;
@@ -32,11 +28,14 @@ class UserController extends AbstractController
     #[Route('/list', name: 'list_users', methods: ['GET'])]
     public function list(): Response
     {
+        $currentUserName = $this->getUser()->getUsername();
+
         if (in_array($this->roleAdmin, $this->getUser()->getRoles())) {
             $users = $this->userService->getAllUsers();
 
             return $this->render('user/list.html.twig', [
                 'users' => $users,
+                'current_username' => $currentUserName,
             ]);
         }
 
@@ -45,6 +44,7 @@ class UserController extends AbstractController
 
             return $this->render('user/list.html.twig', [
                 'users' => $users,
+                'current_username' => $currentUserName,
             ]);
         }
     }
@@ -69,13 +69,15 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
             } catch (\Exception $e) {
-                return $this->render('error.html.twig', ['message' => "Error al crear el usuario"]);
+                // Return user to sign-up view with flash message
+                $this->addFlash('danger', 'Se ha producido un error al realizar la operación');
+                return  $this->render('user/new.html.twig');
             }
 
             return $this->render('success.html.twig');
         }
 
-        return $this->renderForm('user/sign_up.html.twig', [
+        return $this->renderForm('user/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -94,9 +96,9 @@ class UserController extends AbstractController
             $form->setPassword($passwordHasher->hashPassword($form, $form->getPassword()));
             try {
                 $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', "Se ha editado al usuario correctamente");
+                $this->addFlash('success', "Se ha editado el usuario correctamente");
             } catch (\Exception $e) {
-                $this->addFlash('danger', "Error al editar los campos de usuario");
+                $this->addFlash('danger', "Error al editar el usuario");
             }
 
             return $this->redirectToRoute('list_users', [], Response::HTTP_SEE_OTHER);
@@ -114,7 +116,6 @@ class UserController extends AbstractController
         if ($this->getUser()->getId() === $user->getId())
         {
             $this->addFlash('danger', 'No puedes eliminar el usuario con el que estas conectado');
-
             return $this->redirectToRoute('list_users', [], Response::HTTP_SEE_OTHER);
         }
 
