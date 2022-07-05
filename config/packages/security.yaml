@@ -38,5 +38,5 @@ security:
     access_control:
         - { path: ^/user/sign-up, roles: PUBLIC_ACCESS }
         - { path: ^/user, roles: ROLE_USER }
-        - { path: ^/products, roles: ROLE_ADMIN }
+        - { path: ^/product, roles: ROLE_ADMIN }
         - { path: ^/category, roles: ROLE_ADMIN }

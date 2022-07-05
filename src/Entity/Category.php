@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoriesRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CategoriesRepository::class)
+ * @ORM\Entity(repositoryClass=Category::class)
  */
-class Categories
+class Category
 {
     /**
      * @ORM\Id
@@ -30,7 +30,7 @@ class Categories
     private $created_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Products::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
      */
     private $categoryProduct;
 

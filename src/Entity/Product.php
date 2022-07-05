@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductsRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ProductsRepository::class)
+ * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class Products
+class Product
 {
     /**
      * @ORM\Id
@@ -25,7 +25,7 @@ class Products
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="categoryProduct")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="categoryProduct")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -67,12 +67,12 @@ class Products
         return $this;
     }
 
-    public function getCategory(): Categories
+    public function getCategory(): Category
     {
         return $this->category;
     }
 
-    public function setCategory(Categories $category): self
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
 

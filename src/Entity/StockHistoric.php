@@ -24,7 +24,7 @@ class StockHistoric
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Products::class, inversedBy="productHistoric")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="productHistoric")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
@@ -56,12 +56,12 @@ class StockHistoric
         return $this;
     }
 
-    public function getProduct(): Products
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
-    public function setProduct(Products $product): self
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
 
