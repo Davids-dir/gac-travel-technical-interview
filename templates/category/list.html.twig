@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categorias{% endblock %}
+{% block title %}Categorías - Stockify{% endblock %}
 
 {% block body %}
-    {{ block('sidebar', 'product/index.html.twig') }}
-    <!-- loader Start -->
-    {#<div id="loading">
-        <div id="loading-center">
-        </div>
-    </div>#}
-    <!-- loader END -->
-    <!-- Wrapper Start -->
+    {% block loader %}
+        {{ parent() }}
+    {% endblock %}
+    {{ block('sidebar', 'product/list.html.twig') }}
+
     <div class="wrapper">
         <div class="content-page">
             <div class="container-fluid">
@@ -32,13 +29,30 @@
                                 <tr class="ligth ligth-data" role="row">
                                     <th class="text-left">Nombre</th>
                                     <th class="text-center">Código</th>
+                                    <th class="text-center">Fecha de creación</th>
+                                    <th class="text-right">Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for category in categories %}
                                 <tr>
-                                    <td class="text-left">Balones de fútbol</td>
-                                    <td class="text-center">11</td>
+                                    <td class="text-left">{{ category.name }}</td>
+                                    <td class="text-center">{{ category.id }}</td>
+                                    <td class="text-center">{{ category.createdAt | date('d/M/Y') }}</td>
+                                    <td class="text-right">
+                                        <a class="badge bg-warning" data-toggle="tooltip" data-placement="top"
+                                           title="Editar" data-original-title="Editar"
+                                           href="{{ path('category_edit', {id: category.id}) }}">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+                                        <a class="badge bg-danger" data-toggle="tooltip" data-placement="top"
+                                           title="Eliminar" data-original-title="Eliminar"
+                                           href="#">
+                                            <i class="las la-minus"></i>
+                                        </a>
+                                    </td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -47,4 +61,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}

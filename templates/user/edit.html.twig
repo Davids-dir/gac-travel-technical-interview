@@ -1,12 +1,12 @@
 {% extends '/base.html.twig' %}
 
-{% block title %}Modificar usuario{% endblock %}
+{% block title %}Modificar usuario - Stockify{% endblock %}
 
 {% block body %}
     {% block loader %}
         {{ parent() }}
     {% endblock %}
-    {{ block('sidebar', 'product/index.html.twig') }}
+    {{ block('sidebar', 'product/list.html.twig') }}
 
     <div class="wrapper">
         <div class="content-page d-flex">

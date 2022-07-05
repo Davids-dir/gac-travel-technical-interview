@@ -6,46 +6,45 @@
     {% block loader %}
         {{ parent() }}
     {% endblock %}
-    {{ block('sidebar', 'product/index.html.twig') }}
+    {{ block('sidebar', 'product/list.html.twig') }}
 
     <div class="wrapper">
-
-    </div>
-    <div class="content-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
-                        <div>
-                            <h4 class="mb-3">Nueva categoría</h4>
+        <div class="content-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
+                            <div>
+                                <h4 class="mb-3">Nueva categoría</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    {{ form_start(form) }}
-                    {{ form_errors(form) }}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div id="input-category-block" class="form-group">
-                                    {{ form_row(form.name) }}
-                                    <div id="text-input-error" class="help-block">
-                                        <ul class="list-unstyled" style="display: none">
-                                            <li>Rellene este campo.</li>
-                                        </ul>
+                    <div class="col-lg-12">
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div id="input-category-block" class="form-group">
+                                        {{ form_row(form.name) }}
+                                        <div id="text-input-error" class="help-block">
+                                            <ul class="list-unstyled" style="display: none">
+                                                <li>Rellene este campo.</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mt-5 text-center">
+                                    {{ form_row(form.submit) }}
+                                </div>
                             </div>
-                            <div class="col-md-12 mt-5 text-center">
-                                {{ form_row(form.submit) }}
-                            </div>
+                            {{ form_end(form) }}
                         </div>
-                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ asset('assets/js/category.js') }}"></script>
+    <script src="{{ asset('assets/js/category/category.js') }}"></script>
 {% endblock %}
