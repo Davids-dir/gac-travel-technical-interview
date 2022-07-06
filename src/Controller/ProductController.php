@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\Product\EditProductStock;
 use App\Form\Product\EditProductType;
 use App\Form\Product\ProductType;
 use App\Repository\ProductRepository;
 use App\Service\ProductService;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,5 +105,42 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/stock', name: 'product_stock', methods: ['GET', 'POST'])]
+    public function modifyStock(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    {
+        // Get entity before update
+        $previousProductData = $entityManager->getUnitOfWork()->getOriginalEntityData($product);
+
+        $form = $this->createForm(EditProductStock::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            // Return false if value minus actual stock is negative, stock can't be negative as final value
+            $stockQty = $this->productService->getStockNumberDiff($previousProductData, $product);
+
+            if(!$stockQty) {
+                $this->addFlash('danger', 'El stock no se puede quedar en negativo');
+            } else {
+                $form = $form->getData();
+                $form->setStock($stockQty);
+                try {
+                    $this->getDoctrine()->getManager()->flush();
+                    $this->addFlash('success', 'Se modifico el producto correctamente');
+                } catch (Exception $exception) {
+                    $this->addFlash('danger', 'No se ha podido editar el producto');
+                }
+            }
+
+            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('product/stock.html.twig', [
+            'product' => $product,
+            'form' => $form
+        ]);
     }
 }

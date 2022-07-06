@@ -1,6 +1,6 @@
 {% extends '/base.html.twig' %}
 
-{% block title %}Nuevo producto - Stockify{% endblock %}
+{% block title %}Modificar producto - Stockify{% endblock %}
 
 {% block body %}
     {% block loader %}
@@ -15,7 +15,7 @@
                     <div class="col-lg-12">
                         <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
                             <div>
-                                <h4 class="mb-3">Nuevo producto</h4>
+                                <h4 class="mb-3">Editar producto</h4>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,22 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {{ form_row(form.category) }}
+                                    {{ form_label(form.category) }}
+                                    {{ form_widget(form.category) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h6>Cantidad actual existente en stock: </h6>
+                                    <div>
+                                        {{ product.stock }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ form_label(form.stock) }}
+                                    {{ form_widget(form.stock, {'value' : 0}) }}
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5 text-center">
@@ -49,7 +64,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 {% endblock %}
