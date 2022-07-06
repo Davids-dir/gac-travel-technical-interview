@@ -25,8 +25,8 @@
                             <table class="table mb-0 tbl-server-info no-footer" role="grid">
                                 <thead class="bg-white text-uppercase">
                                 <tr class="ligth ligth-data" role="row">
-                                    <th class="text-left">ID</th>
                                     <th class="text-left">Nombre</th>
+                                    <th class="text-left">Código</th>
                                     <th class="text-left">Activo</th>
                                     <th class="text-left">Fecha de creación</th>
                                     <th class="text-left">Rol</th>
@@ -37,8 +37,8 @@
                                 {% if users is defined %}
                                     {% for user in users %}
                                         <tr>
-                                            <td class="text-left id">{{ user.id }}</td>
                                             <td class="text-left">{{ user.username }}</td>
+                                            <td class="text-left id">{{ user.id }}</td>
                                             <td class="text-left">
                                                 {% if user.active is same as (true) %}
                                                     {{ 'Si' }}

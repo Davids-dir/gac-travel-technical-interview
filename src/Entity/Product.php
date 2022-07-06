@@ -50,6 +50,11 @@ class Product
         $this->productHistoric = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getCategory()->getName();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -67,7 +72,7 @@ class Product
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

@@ -35,7 +35,7 @@ class EditUserType extends AbstractType
                 'label' => 'Activo',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-check-input mt-2'
+                    'class' => 'form-check'
                 ]
             ])
             ->add('submit', SubmitType::class, [

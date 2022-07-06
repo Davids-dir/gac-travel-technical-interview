@@ -62,7 +62,7 @@
                             <div>
                                 <h4 class="mb-3">Productos</h4>
                             </div>
-                            <a href="#l" class="btn btn-primary add-list">
+                            <a href="{{ path('product_new') }}" class="btn btn-primary add-list">
                                 <i class="las la-plus mr-3"></i>Nuevo producto
                             </a>
                         </div>
@@ -80,26 +80,28 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for product in products %}
                                 <tr>
-                                    <td class="text-left">Accelerate FIFA Pro</td>
-                                    <td class="text-left">1</td>
-                                    <td class="text-left">Balones de fútbol</td>
-                                    <td class="text-center">10</td>
+                                    <td class="text-left">{{ product.name }}</td>
+                                    <td class="text-left">{{ product.id }}</td>
+                                    <td class="text-left">{{ product.category.name }}</td>
+                                    <td class="text-center">{{ product.stock }}</td>
                                     <td class="text-right">
-                                        <a class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar stock" href="#">
-                                            <i class="las la-minus"></i>
-                                        </a>
                                         <a class="badge bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Añadir stock" href="#">
                                             <i class="las la-plus"></i>
                                         </a>
                                         <a class="badge bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Histórico" href="#">
                                             <i class="las la-history"></i>
                                         </a>
-                                        <a class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar" href="#">
+                                        <a class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar" href="{{ path('product_edit', {id: product.id}) }}">
                                             <i class="ri-pencil-line"></i>
+                                        </a>
+                                        <a class="badge bg-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar stock" href="#">
+                                            <i class="las la-minus"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

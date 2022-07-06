@@ -17,23 +17,24 @@
                             <div>
                                 <h4 class="mb-3">Editar usuario</h4>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 {{ form_start(form) }}
                                 {{ form_errors(form) }}
                                 <div class="row flex-column align-items-center">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             {{ form_row(form.username) }}
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             {{ form_row(form.password) }}
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            {{ form_row(form.active) }}
+                                            {{ form_label(form.active) }}
+                                            {{ form_widget(form.active) }}
                                         </div>
                                     </div>
                                     <div class="col-md-8 mt-0 text-center">
