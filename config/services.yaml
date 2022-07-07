@@ -25,3 +25,10 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Controller\UserController:
         $tokenId: '%env(TOKEN_ID)%'
+
+    App\EventListener\ProductEditStockListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'postUpdate'
+                entity: 'App\Entity\Product'

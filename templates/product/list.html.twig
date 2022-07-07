@@ -81,6 +81,7 @@
                                 </thead>
                                 <tbody>
                                 {% for product in products %}
+                                    {#{{ dump(stock_historics) }}#}
                                 <tr>
                                     <td class="text-left">{{ product.name }}</td>
                                     <td class="text-left">{{ product.id }}</td>
@@ -90,7 +91,7 @@
                                         <a class="badge bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Añadir stock" href="{{ path('product_stock', {id: product.id}) }}">
                                             <i class="las la-plus"></i>
                                         </a>
-                                        <a class="badge bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Histórico" href="#">
+                                        <a class="badge bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Histórico" href="{{ path('stock_historic_show', {id: product.id}) }}">
                                             <i class="las la-history"></i>
                                         </a>
                                         <a class="badge bg-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Editar" href="{{ path('product_edit', {id: product.id}) }}">

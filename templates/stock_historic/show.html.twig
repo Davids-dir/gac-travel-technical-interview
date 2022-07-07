@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historico de stock - Stockify{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {{ parent() }}
+    {% endblock %}
+    {{ block('sidebar', 'product/list.html.twig') }}
+
+    <div class="wrapper">
+        <div class="content-page">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
+                            <div>
+                                <h4 class="mb-3">Historico: {{ product_name }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="table-responsive mb-3">
+                            <table class="table mb-0 tbl-server-info no-footer" role="grid">
+                                <thead class="bg-white text-uppercase">
+                                <tr class="ligth ligth-data" role="row">
+                                    <th class="text-left">Código</th>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Cantidad modificada</th>
+                                    <th class="text-center">Usuario</th>
+                                    <th class="text-center">Fecha de modificación</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for stock_historic in stock_historics %}
+                                    <tr>
+                                        <td class="text-left">{{ stock_historic.id }}</td>
+                                        <td class="text-center">{{ stock_historic.product.name }}</td>
+                                        <td class="text-center">{{ stock_historic.stock }}</td>
+                                        <td class="text-center">{{ stock_historic.user.username }}</td>
+                                        <td class="text-center">{{ stock_historic.createdAt | date('d/M/Y') }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

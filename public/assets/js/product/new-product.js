@@ -1,11 +1,13 @@
-const categoryInput = document.getElementById('edit_category_name');
-const buttonSubmit = document.getElementById('edit_category_submit');
-const inputBorderError = document.getElementById('input-category-block');
+const productInput = document.getElementById('product_name');
+const buttonSubmit = document.getElementById('product_submit');
+const inputBorderError = document.getElementById('input-product-block');
 const helpErrorText = document.getElementById('text-input-error');
 const helpErrorChilds = helpErrorText.children;
 
 // When document load
-categoryInput.addEventListener('change', function () {
+// Disabled submit button
+buttonSubmit.classList.add('disabled');
+productInput.addEventListener('change', function () {
     checkLength(this);
 });
 

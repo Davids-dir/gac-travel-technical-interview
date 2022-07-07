@@ -110,7 +110,7 @@ class ProductController extends AbstractController
     #[Route('/{id}/stock', name: 'product_stock', methods: ['GET', 'POST'])]
     public function modifyStock(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        // Get entity before update
+        // Obtenemos la entidad en el momento de hacer la petición para saber la cantidad que tiene antes de modificarla
         $previousProductData = $entityManager->getUnitOfWork()->getOriginalEntityData($product);
 
         $form = $this->createForm(EditProductStock::class, $product);
@@ -118,20 +118,20 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-            // Return false if value minus actual stock is negative, stock can't be negative as final value
+            // Desarrollamos la parte lógica en el Servicio enviando la entidad antigua y los valores a modificar que nos llegan en la petición
+            // El servicio nos retornara FALSE en caso de que se esté solicitando eliminar más stock del actual a la hora de hacer la modificación
             $stockQty = $this->productService->getStockNumberDiff($previousProductData, $product);
 
             if(!$stockQty) {
-                $this->addFlash('danger', 'El stock no se puede quedar en negativo');
+                $this->addFlash('danger', 'La cantidad total de stock para el producto no puede ser negativa');
             } else {
                 $form = $form->getData();
                 $form->setStock($stockQty);
                 try {
                     $this->getDoctrine()->getManager()->flush();
-                    $this->addFlash('success', 'Se modifico el producto correctamente');
+                    $this->addFlash('success', 'Se modifico el stock del producto correctamente');
                 } catch (Exception $exception) {
-                    $this->addFlash('danger', 'No se ha podido editar el producto');
+                    $this->addFlash('danger', 'No se ha podido editar el stock del producto');
                 }
             }
 

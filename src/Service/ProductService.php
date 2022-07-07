@@ -15,6 +15,11 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
+    public function getProductById(int $id)
+    {
+        return $this->productRepository->findOneBy(['id' => $id]);
+    }
+
     public function getAllProducts()
     {
         return $this->productRepository->findAll();
@@ -28,14 +33,14 @@ class ProductService
         $checkStockPositiveOrNegative = gmp_sign($product->getStock());
 
 
-        if ($checkStockPositiveOrNegative === 1) { // Value from request is positive
+        if ($checkStockPositiveOrNegative === 1) { // La cantidad a modificar que nos llega en la petición tiene un valor positivo
             $updateStockValue = $previousProductData['stock'] + $product->getStock();
-        } elseif ($checkStockPositiveOrNegative === 0) { // Value from request is zero
+        } elseif ($checkStockPositiveOrNegative === 0) { // La cantidad a modificar que nos llega en la petición es cero
             $updateStockValue = $previousProductData['stock'];
-        } else { // Value from request is negative
-            if (($previousProductData['stock'] - abs($product->getStock())) < 0) {  // Value after minus operation is negative, can't be negative
+        } else { // La cantidad a modificar que nos llega en la petición tiene un valor negativo
+            if (($previousProductData['stock'] - abs($product->getStock())) < 0) {  // Codigo para saber si tras la operación sobre la cantidad actual nos devuelve negativo, retornamos false. NO ES POSIBLE DEJAR EL STOCK EN NEGATIVO
                 return false;
-            } else {
+            } else { // Retornamos la cantidad en caso de poder realizar la operación de resta sobre el stock actual antes de la actualización de la entidad
                 $updateStockValue = $previousProductData['stock'] - abs($product->getStock());
             }
         }
