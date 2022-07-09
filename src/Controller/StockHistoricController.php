@@ -58,9 +58,12 @@ class StockHistoricController extends AbstractController
         $stockHistorics = $this->stockHistoricService->getHistoricByProductId($request->attributes->get('id'));
         $product = $this->productService->getProductById($request->attributes->get('id'));
 
+        $differences = $this->stockHistoricService->getStockDifferencesEachRegister($stockHistorics);
+
         return $this->render('stock_historic/show.html.twig', [
             'stock_historics' => $stockHistorics,
-            'product_name' => $product->getName()
+            'product_name' => $product->getName(),
+            'diff' => $differences
         ]);
     }
 

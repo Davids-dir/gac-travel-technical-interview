@@ -38,7 +38,7 @@ class ProductService
         } elseif ($checkStockPositiveOrNegative === 0) { // La cantidad a modificar que nos llega en la petición es cero
             $updateStockValue = $previousProductData['stock'];
         } else { // La cantidad a modificar que nos llega en la petición tiene un valor negativo
-            if (($previousProductData['stock'] - abs($product->getStock())) < 0) {  // Codigo para saber si tras la operación sobre la cantidad actual nos devuelve negativo, retornamos false. NO ES POSIBLE DEJAR EL STOCK EN NEGATIVO
+            if (($previousProductData['stock'] - abs($product->getStock())) < 0) {  // Código para saber si tras la operación sobre la cantidad actual nos devuelve negativo, retornaremos FALSE. No es posible dejar el stock en negativo
                 return false;
             } else { // Retornamos la cantidad en caso de poder realizar la operación de resta sobre el stock actual antes de la actualización de la entidad
                 $updateStockValue = $previousProductData['stock'] - abs($product->getStock());

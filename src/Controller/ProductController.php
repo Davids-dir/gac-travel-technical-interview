@@ -8,7 +8,6 @@ use App\Form\Product\EditProductType;
 use App\Form\Product\ProductType;
 use App\Repository\ProductRepository;
 use App\Service\ProductService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

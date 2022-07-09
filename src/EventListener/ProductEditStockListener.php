@@ -25,25 +25,8 @@ class ProductEditStockListener
         }
 
         $user = $this->tokenStorage->getToken()->getUser();
+        $stockValue = $product->getStock();
         $entityManager = $event->getObjectManager();
-
-        // Esto nos retornará un array de 2 elementos
-        // En la posición 0 encontraremos el valor anterior, en la posición 1 encontraremos el valor actual del stock del producto
-        $dataBeforeUpdateEntity = $this->entityManagerInterface->getUnitOfWork()->getEntityChangeSet($product);
-
-        // Código que insertara en la tabla de StockHistoric el valor positivo o negativo
-        // Esto solo se ejecuta cuando se detecta un cambio que afecte a la propiedad STOCK del producto
-        // No se ejecutara si modificamos otras propiedades tales como el NOMBRE o la CATEGORÍA del producto
-        if (!empty($dataBeforeUpdateEntity)) {
-            // ¿La cantidad anterior es menor a la que nos llega?
-            // RECORDAMOS QUES ESTO SOLO VA A SUCEDER SI SUPERA LA LÓGICA QUE APLICAMOS AL STOCK EN EL CONTROLADOR
-            $dataBeforeUpdateEntity['stock'][0] < $entity->getStock()
-                ?  $stockValue = abs($dataBeforeUpdateEntity['stock'][0] - $entity->getStock()) // Entonces se está añadiendo stock al producto, conseguimos el valor absoluto o la diferencia entre la cantidad antigua y la nueva
-                :   $stockValue = '-' . abs($dataBeforeUpdateEntity['stock'][0] - $entity->getStock()); // En este caso es que se está restando, obtenemos la diferencia y añadimos el negativo delante para devolver la cantidad restada
-        }
-
-        // Este código se emplea en caso de que tan solo queramos añadir la cantidad de stock total en el registro de StockHistoric
-        // $stockValue = $product->getStock();
 
         $stockHistoric = new StockHistoric();
         $stockHistoric->setStock(intval($stockValue));

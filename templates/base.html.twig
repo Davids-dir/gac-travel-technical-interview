@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {{ include('head.html.twig') }}
+        {{ include('components/head.html.twig') }}
         <title>{% block title %}Prueba{% endblock %}</title>
     </head>
     <body>
@@ -15,13 +15,12 @@
                 {{ message }}
             </div>
         {% endfor %}
+
+        <div id="loading">
+            <div id="loading-center">
+            </div>
+        </div>
         {% block body %}
-            {% block loader %}
-                <div id="loading">
-                    <div id="loading-center">
-                    </div>
-                </div>
-                {% endblock %}
         {% endblock %}
         {% block javascripts %}
             <!-- Backend Bundle JavaScript -->
@@ -29,6 +28,7 @@
 
             <!-- app JavaScript -->
             <script src="{{ asset('assets/js/app.js') }}"></script>
+            <script src="{{ asset('assets/js/sidebar.js') }}"></script>
         {% endblock %}
     </body>
 </html>

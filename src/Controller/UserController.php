@@ -49,7 +49,7 @@ class UserController extends AbstractController
         }
     }
 
-    #[Route('/sign-up', name: 'sign_up', methods: ['GET','POST'])]
+    #[Route('/sign-up', name: 'new_user', methods: ['GET','POST'])]
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();

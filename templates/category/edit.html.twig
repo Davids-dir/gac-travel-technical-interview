@@ -3,10 +3,7 @@
 {% block title %}Modificar Categoría - Sotckify{% endblock %}
 
 {% block body %}
-    {% block loader %}
-        {{ parent() }}
-    {% endblock %}
-    {{ block('sidebar', 'product/list.html.twig') }}
+    {{ include('components/sidebar.html.twig') }}
 
     <div class="wrapper">
         <div class="content-page">
