@@ -1,3 +1,4 @@
+// JavaScript to check URL and active current <li> in sidebar
 section = document.getElementById('iq-sidebar-toggle').children;
 
 if (window.location.href.indexOf("product") > -1) {

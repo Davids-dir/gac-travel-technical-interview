@@ -55,9 +55,15 @@ class StockHistoricController extends AbstractController
     #[Route('/{id}', name: 'stock_historic_show', methods: ['GET', 'POST'])]
     public function show(Request $request/*, StockHistoric $stockHistoric*/): Response
     {
+        // Obtengo todos los registros asociados al producto por ID
+        // Obtengo el nombre del producto para mostrarlo en el template
         $stockHistorics = $this->stockHistoricService->getHistoricByProductId($request->attributes->get('id'));
         $product = $this->productService->getProductById($request->attributes->get('id'));
 
+        /**
+         * @var $differences
+         * @return array
+         */
         $differences = $this->stockHistoricService->getStockDifferencesEachRegister($stockHistorics);
 
         return $this->render('stock_historic/show.html.twig', [

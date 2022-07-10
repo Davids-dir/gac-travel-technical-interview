@@ -25,7 +25,7 @@ class ProductService
         return $this->productRepository->findAll();
     }
 
-    public function getStockNumberDiff(array $previousProductData, Product $product)
+    public function checkIfPossibleUpdateStock(array $previousProductData, Product $product)
     {
         /** @var $checkStockPositiveOrNegative
          * return 1 for positive, 0 is value is data given is zero, -1 if negative

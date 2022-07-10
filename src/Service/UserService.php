@@ -18,4 +18,9 @@ class UserService
     {
         return $this->userRepository->findAll();
     }
+
+    public function getUserByUsername(string $username)
+    {
+        return $this->userRepository->findOneBy(['username' => $username]);
+    }
 }

@@ -17,18 +17,24 @@ class NewUserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => false,
+                'label' => 'Usuario',
                 'attr' => [
                     'class' => 'floating-input form-control',
-                    'placeholder' => 'Usuario'
+                    'placeholder' => ''
                 ],
+                /*'row_attr' => [
+                    'class' => 'form-floating',
+                ],*/
             ])
             ->add('password', PasswordType::class, [
-                'label' => false,
+                'label' => 'Contraseña',
                 'attr' => [
                     'class' => 'floating-input form-control',
-                    'placeholder' => 'Contraseña'
-                ]
+                    'placeholder' => ''
+                ],
+                /*'row_attr' => [
+                    'class' => 'form-floating',
+                ],*/
             ])
             ->add('active', HiddenType::class, [
                 'required' => false

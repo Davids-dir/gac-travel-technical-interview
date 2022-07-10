@@ -69,12 +69,13 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
             } catch (\Exception $e) {
-                // Return user to sign-up view with flash message
                 $this->addFlash('danger', 'Se ha producido un error al realizar la operación');
-                return  $this->render('user/new.html.twig');
+                return  $this->render('error.html.twig');
             }
 
             return $this->render('success.html.twig');
+        } elseif ($form->isSubmitted() && !$form->isValid()) { // Este código es debido a que por el empleo de floating labels en el form, no se muestra el mensaje que informa de que el NOMBRE DE USUARIO YA ESTÁ EN USO
+            $this->addFlash('danger', 'El nombre de usuario escogido ya esta en uso');
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -99,6 +100,12 @@ class UserController extends AbstractController
                 $this->addFlash('success', "Se ha editado el usuario correctamente");
             } catch (\Exception $e) {
                 $this->addFlash('danger', "Error al editar el usuario");
+            }
+
+            if (($this->getUser()->getUsername() === $form->getUsername()) && (!$this->getUser()->getActive())) {
+
+                // If user is logged is same as edit form and is not active, redirect to logout
+                return $this->redirectToRoute('logout', [], Response::HTTP_SEE_OTHER);
             }
 
             return $this->redirectToRoute('list_users', [], Response::HTTP_SEE_OTHER);

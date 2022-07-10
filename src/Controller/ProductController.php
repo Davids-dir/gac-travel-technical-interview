@@ -119,7 +119,7 @@ class ProductController extends AbstractController
 
             // Desarrollamos la parte lógica en el Servicio enviando la entidad antigua y los valores a modificar que nos llegan en la petición
             // El servicio nos retornara FALSE en caso de que se esté solicitando eliminar más stock del actual a la hora de hacer la modificación
-            $stockQty = $this->productService->getStockNumberDiff($previousProductData, $product);
+            $stockQty = $this->productService->checkIfPossibleUpdateStock($previousProductData, $product);
 
             if(!$stockQty) {
                 $this->addFlash('danger', 'La cantidad total de stock para el producto no puede ser negativa');
