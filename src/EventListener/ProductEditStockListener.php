@@ -19,8 +19,13 @@ class ProductEditStockListener
     public function postUpdate(Product $product, LifecycleEventArgs $event): void
     {
         $entity = $event->getObject();
+        $originalData = $this->entityManagerInterface->getUnitOfWork()->getEntityChangeSet($product);
 
-        if (!$entity instanceof Product) {
+        if (empty($originalData['stock'])) {
+          return;
+        }
+
+        if (!$entity instanceof Product ) {
             return;
         }
 
