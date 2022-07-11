@@ -53,7 +53,7 @@ class StockHistoricController extends AbstractController
     }
 
     #[Route('/{id}', name: 'stock_historic_show', methods: ['GET', 'POST'])]
-    public function show(Request $request/*, StockHistoric $stockHistoric*/): Response
+    public function show(Request $request): Response
     {
         // Obtengo todos los registros asociados al producto por ID
         // Obtengo el nombre del producto para mostrarlo en el template
