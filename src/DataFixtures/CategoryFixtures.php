@@ -9,6 +9,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CategoryFixtures extends Fixture
 {
+    private $client;
+
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;

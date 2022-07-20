@@ -11,6 +11,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ProductFixtures extends Fixture
 {
+    private $client;
+    private $categoryService;
+
     public function __construct(HttpClientInterface $client, CategoryService $categoryService)
     {
         $this->client = $client;
